@@ -11,6 +11,7 @@ class App:
     @cherrypy.expose
     def index(self):
         yield "It works!"
+
 appinst = App()
 
 # Set up cherrypy config
@@ -18,6 +19,7 @@ appdir = "/home/python/app"
 appconf = {
     '/': {
         'tools.sessions.on':True,
+        'tools.sessions.locking': 'explicit',
         'tools.sessions.storage_type':'file',
         'tools.sessions.storage_path':appdir+'/sessions/',
         'tools.sessions.timeout':525600,
@@ -31,7 +33,7 @@ appconf = {
 
 cherrypy.config.update({
     'server.socket_port':3000,
-    'server.thread_pool':1,
+    'server.thread_pool':5,
     'server.socket_host': '0.0.0.0',
     'sessionFilter.on':True,
     'server.show.tracebacks': True
